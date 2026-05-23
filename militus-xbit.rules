@@ -1,0 +1,76 @@
+# Sagan militus-xbit.rules
+# Copyright (c) 2009-2016, Quadrant Information Security <www.quadrantsec.com>
+# All rights reserved.
+#
+# Please submit any custom rules or ideas to sagan-submit@quadrantsec.com or the sagan-sigs mailing list
+#
+#*************************************************************
+#  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+#  following conditions are met:
+#
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+#    disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+#    following disclaimer in the documentation and/or other materials provided with the distribution.
+#  * Neither the name of the nor the names of its contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES,
+#  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+#  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+
+#Web Server Vulns. $HTTP_PORT
+alert any $HOME_NET $HTTP_PORT -> any any (msg:"[Tenable PVS] CRITICAL Web Vulnerability Discovered - Xbit Set"; program: pvs; content: "CRITICAL"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000001; rev:1;)
+alert any $HOME_NET $HTTP_PORT -> any any (msg:"[Tenable PVS] HIGH Web Vulnerability Discovered - Xbit Set"; program: pvs; content: "HIGH"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000002; rev:1;)
+alert any $HOME_NET $HTTP_PORT -> any any (msg:"[Tenable PVS] MEDIUM Web Vulnerability Discovered - Xbit Set"; program: pvs; content: "MEDIUM"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_medium, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000003; rev:1;)
+
+#HTTPS_PORT
+alert any $HOME_NET $HTTPS_PORT -> any any (msg:"[Tenable PVS] CRITICAL Web Vulnerability Discovered - Xbit Set"; program: pvs; content:"CRITICAL"; content:!"SSL Expired"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000004; rev:1;)
+alert any $HOME_NET $HTTPS_PORT -> any any (msg:"[Tenable PVS] HIGH Web Vulnerability Discovered - Xbit Set"; program: pvs; content:"HIGH"; content:!"SSL Expired"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000005; rev:1;)
+alert any $HOME_NET $HTTPS_PORT -> any any (msg:"[Tenable PVS] MEDIUM Web Vulnerability Discovered - Xbit Set"; program: pvs; content:"MEDIUM"; content:!"SSL Expired"; classtype: app-vulnerability; xbits: set_srcport, web_vuln_medium, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000006; rev:1;)
+
+
+#Web Client Vulns
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] CRITICAL Web Client Vulnerability Discovered - Xbit Set"; program: pvs; content:"CRITICAL"; meta_content: "%sagan%",$WEBBROWSERS; classtype: app-vulnerability; xbits: set_srcport, webclient_vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000007; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] HIGH Web Client Vulnerability Discovered - Xbit Set"; program: pvs; meta_content: "%sagan%",$WEBBROWSERS; content:"HIGH" classtype: app-vulnerability; xbits: set_srcport, webclient_vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 70000008; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] MEDIUM Web Client Vulnerability Discovered - Xbit Set"; program: pvs; content:"MEDIUM"; meta_content: "%sagan%",$WEBBROWSERS; classtype: app-vulnerability; xbits: set_srcport, webclient_vuln_medium, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000009; rev:1;)
+
+
+#PDF Vulns
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] CRITICAL PDF Vulnerability Discovered - Xbit Set"; program: pvs; content:"CRITICAL"; meta_content: "%sagan%",$PDFTERMS; classtype: app-vulnerability; xbits: set_srcport, pdf_vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000010; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] HIGH PDF Vulnerability Discovered - Xbit Set"; program: pvs; content:"HIGH"; meta_content: "%sagan%",$PDFTERMS; classtype: app-vulnerability; xbits: set_srcport, pdf_vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000011; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] MEDIUM PDF Vulnerability Discovered - Xbit Set"; program: pvs; content:"MEDIUM"; meta_content: "%sagan%",$PDFTERMS; classtype: app-vulnerability; xbits: set_srcport, pdf_vuln_medium, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000012; rev:1;)
+
+
+
+#General Vulns
+
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] CRITICAL Vulnerability Discovered - Xbit Set"; program: pvs; content:"CRITICAL"; classtype: app-vulnerability; xbits: set_srcport, vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000013; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] HIGH Vulnerability Discovered - Xbit Set"; program: pvs; content:"HIGH"; classtype: app-vulnerability; xbits: set_srcport, vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000014; rev:1;)
+alert any $HOME_NET any -> any any (msg:"[Tenable PVS] MEDIUM Vulnerability Discovered - Xbit Set"; program: pvs; content:"MEDIUM"; classtype: app-vulnerability; xbits: set_srcport, vuln_medium, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000015; rev:1;)
+
+
+alert any any any -> $HOME_NET any (msg:"[SNORT] Network Scan Detected - Xbit Set"; program: snort; content: "ET SCAN"; classtype: attempted-recon; xbits: set, recon, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000016; rev:1;)
+
+#SQL Injection Attempts
+alert any any any -> $HOME_NET any (msg:"[SNORT] SQLi Attempt Detected - Xbit Set"; program: snort; content: "ET WEB_SERVER"; content: "SQL Injection"; classtype: attempted-recon; xbits: set, sqli_target, 300; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000017; rev:1;)
+alert any any any -> $HOME_NET any (msg:"[SNORT] SQLi Attempt Detected - Xbit Set"; program: snort; content: "ET WEB_SPECIFIC_APPS"; content: "SQL Injection"; classtype: attempted-recon; xbits: set, sqli_target, 300; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000018; rev:1;)
+
+
+#NIST - Network Scanning/
+
+alert any any any->  $HOME_NET any (msg:"[SNORT] Potentiallly Bad Traffic - Xbit set"; program: snort; content: "ET POLICY Suspicious"; Classtype: nist-impact; xbits: set_srcport, potential_scan, 67000; xbits: noalert;  normalize; reference: milituscyber.com; sid: 7000021; rev:1;)
+
+#Audio Vulns
+#alert any $HOME_NET any -> any any (msg:"[Tenable PVS] CRITICAL AUDIO FILE Vulnerability Discovered - Xbit Set"; program: pvs; content:"CRITICAL"; meta_content: "%sagan%",$AUDIOFILES; classtype: app-vulnerability; xbits: set_srcport, audio_vuln_critical, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000022; rev:1;)
+#alert any $HOME_NET any -> any any (msg:"[Tenable PVS] HIGH AUDIO FILE Vulnerability Discovered - Xbit Set"; program: pvs; content:"HIGH"; meta_content: "%sagan%",$AUDIOFILES; classtype: app-vulnerability; xbits: set_srcport, audio_vuln_high, 604800; xbits: noalert; normalize; reference: milituscyber.com; sid: 7000023; rev:1;)
+#alert any $HOME_NET any -> any any (msg:"[Tenable PVS] MEDIUM AUDIO FILE Vulnerability Discovered - Xbit Set"; program: pvs; content:"MEDIUM"; meta_content: "%sagan%",$AUDIOFILES; classtype: app-vulnerability; xbits: set_srcport, audio_vuln_medium, 604800; normalize; reference: milituscyber.com; sid: 7000024; rev:1;)
+
+alert tcp any any -> $HOME_NET any (msg:"[SNORT] SQLi Attempt Detected - Xbit Set"; program: snort; content: "ET WEB_SPECIFIC_APPS"; content: "SQL Injection"; classtype: attempted-recon; xbits: set, sqli_target, 300; xbits: noalert; normalize; reference: milituscyber.com; sid: 6000013; rev:1;)

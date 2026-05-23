@@ -1,0 +1,60 @@
+# Sagan militus-correlated.rules
+# Copyright (c) 2009-2016, Quadrant Information Security <www.quadrantsec.com>
+# All rights reserved.
+#
+# Please submit any custom rules or ideas to sagan-submit@quadrantsec.com or the sagan-sigs mailing list
+#
+#*************************************************************
+#  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+#  following conditions are met:
+#
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+#    disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+#    following disclaimer in the documentation and/or other materials provided with the distribution.
+#  * Neither the name of the nor the names of its contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES,
+#  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+#  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+alert any any any -> any any (msg: "[MILITUS TEST] 1 Alert Test"; program: snort; content: "Alert Test for Graylog"; classtype: traffic-normal; normalize; reference: url, milituscyber.com; sid:4005004; pri:10; rev: 1;)
+
+alert any any any -> any any (msg:"[MILITUS TEST SID] 1 Alert Test"; program:snort; content: "ET ATTACK_RESPONSE"; classtype: traffic-normal; normalize; reference: url, milituscyber.com; sid:4005005; pri:5; rev:1;)
+
+alert any any any -> any [80,443] (msg:"[MILITUS TEST SID] ALERT BRUTE FORCE - Xbit Set"; program: pvs; content: "Client Data Leakage Detection"; classtype: app-vulnerability; xbits: set, webvuln_critical_attack_1, 30000; xbits: noalert; normalize; reference: milituscyber.com; sid: 4005006; rev:1;)
+alert any any any -> any [80,443] (msg:"[MILITUS TEST SID] ALERT BRUTE 1"; program: pvs; content: "Client Data Leakage Detection (Username and Password)"; classtype: app-vulnerability; xbits:isset, both, webvuln_critical_attack_1, xbits: set, web_vuln_critical_attack_2, 30000; xbits: noalert; normalize; reference: milituscyber.com; sid: 4005007; rev:1;)
+alert any any any -> any [80,443] (msg:"[MILITUS TEST SID] ALERT BRUTE FORCE 2"; program: pvs; content: "Client Data Leakage Detection (Username and Password)"; classtype: app-vulnerability; xbits:isset, by_dst,webvuln_critical_attack_2, xbits: set, web_vuln_critical_attack_3, 30000;  normalize; reference: milituscyber.com; sid: 4005008; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS TEST SID] 1 Alert Test"; program:snort; content: "ET WEB_SERVER Script tag in URI"; classtype: traffic-normal; normalize; reference: url, milituscyber.com; sid:4005009; pri:5; rev:1;)
+
+
+alert any $EXTERNAL_NET any -> any any (msg:"[TOR Traffic Blah]"; program: snort; content: "ET TOR Known Tor Exit Node"; classtype: traffic-tor; xbits: set,tor_exit_node,3600; normalize; reference: url, milituscyber.com sid:4005010; pri:6; rev:1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[TOR Traffic Recon]"; program: snort; content: "ET SCAN"; classtype: nist-recon; xbits: isset,by_src,tor_exit_node; xbits:set, attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005011; pri:7; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[TOR Traffic Recon]"; program: snort; content: "Classification|3a| Detection of a Network Scan"; classtype: nist-recon; xbits:isset,by_src,tor_exit_node;xbits:set, attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005012; pri:7; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[TOR Traffic Recon]"; program: snort; content: "Classification|3a| Large Scale Information Leak"; classtype: nist-recon; xbit:isset,by_src,tor_exit_node;xbit:set, attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005013; pri:7; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[TOR Traffic Recon]"; program: snort; content: "Classification|3a| Information Leak"; classtype: nist-recon; xbits:isset,by_src,tor_exit_node;xbits:set, attacker_scan, 86400; xbits: noalert;  normalize; reference: url, milituscyber.com; sid:4005014; pri:7; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[TOR Traffic Recon]"; program: snort; content: "Classification|3a| Potentially Bad Traffic"; classtype: nist-recon; xbit: isset,by_src,tor_exit_node; xbits:set, attacker_scan, 86400; xbits:noalert; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005015; pri:7; rev: 1;)
+
+alert any any any -> any any (msg:"[MILITUS TEST DDOS]") 1 Alert Test"; program: snort; content: "ET DROP Spamhaus DROP"; classtype: traffic-dos; normalize;  threshold: type limit, track by_src, count 1, seconds 10; after: track by_dst, count 100, seconds 30; xbits:set, ddos_attack, 50; xbits: noalert; reference: url, milituscyber.com; sid:4005016; pri:5; rev:1;)
+alert any any any -> any any (msg:"[MILITUS TEST DDOS]") 1 Alert Test"; program: snort; content: "ET DROP Spamhaus DROP"; classtype: traffic-dos; normalize; threshold: type limit, track by_dst, count 1, seconds 10; after: track by_dst, count 100, seconds 30; xbits: unset, by_dst, ddos_attack; reference: url, milituscyber.com; sid:4005017; pri:5; rev:1;)
+
+alert any any any -> $HOME_NET any (msg:"[MILITUS ATTACK]"; program: snort; content: "ET SHELLCODE"; classtype: traffic-normal; xbits: set, executable_code, 86400; xbits: noalert; normalize; reference: milituscyber.com; sid:4005018; rev: 1;)
+
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance"; program: snort; content: "ET SCAN"; classtype: nist-recon; xbits:isset,by_src,executable_code; xbits:set, lm_attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005019; pri:7; rev: 1;)
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance"; program: snort; content: "Classification|3a| Detection of a Network Scan"; classtype: nist-recon; xbits:isset,by_src,executable_code;xbits:set, lm_attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005020; pri:7; rev: 1;)
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance"; program: snort; content: "Classification|3a| Large Scale Information Leak"; classtype: nist-recon; xbits:isset,by_src,executable_code; xbits:set, lm_attacker_scan, 86400; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4005021; pri:7; rev: 1;)
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance"; program: snort; content: "Classification|3a| Information Leak"; classtype: nist-recon; xbits:isset,by_src,executable_code;xbits:set, lm_attacker_scan, 86400;   normalize; reference: url, milituscyber.com; sid:4005022; pri:7; rev: 1;)
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance"; program: snort; content: "Classification|3a| Potentially Bad Traffic"; classtype: nist-recon; xbits: isset,by_src,executable_code; xbits:set, lm_attacker_scan, 86400; xbits:noalert; normalize; reference: url, milituscyber.com; sid:4005023; pri:7; rev: 1;)
+
+alert any $HOME_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK]"; prog: bro_conn; content: "ShAdfDr"; threshold: type limit, track by_src, count 1, seconds 300; classtype: brute-force; xbits: isset,reverse,lm_attacker_scan; xbits:set, lm_brute_force, 86400; normalize; reference: url, milituscyber.com; sid:4005024; pri: 2; rev:1;)
+
+

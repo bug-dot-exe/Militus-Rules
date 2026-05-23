@@ -1,0 +1,63 @@
+# Sagan militus-correlated.rules
+# Copyright (c) 2009-2016, Quadrant Information Security <www.quadrantsec.com>
+# All rights reserved.
+#
+# Please submit any custom rules or ideas to sagan-submit@quadrantsec.com or the sagan-sigs mailing list
+#
+#*************************************************************
+#  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+#  following conditions are met:
+#
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+#    disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+#    following disclaimer in the documentation and/or other materials provided with the distribution.
+#  * Neither the name of the nor the names of its contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES,
+#  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+#  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTP_PORT (msg: "[MILITUS ATTACK] Attack on Critically Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isset,dst_xbitsrc_p,web_vuln_critical; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000000; pri:4; rev: 1;)
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTP_PORT (msg: "[MILITUS ATTACK] Attack on Highly Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isnotset,dst_xbitsrc,web_vuln_critical_p; xbits: isset,dst_xbitsrc_p,web_vuln_high; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000001; pri:5; rev: 1;)
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTP_PORT (msg: "[MILITUS ATTACK] Attack on Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isnotset,dst_xbitsrc_p,web_vuln_critical; xbits: isnotset,dst_xbitsrc_p,web_vuln_high; xbits: isset,dst_xbitsrc_p,web_vuln_medium; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:800002; pri:6; rev: 1;)
+
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTPS_PORT (msg: "[MILITUS ATTACK] Attack on Critically Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isset,dst_xbitsrc_p,web_vuln_critical; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000003; pri:5; rev: 1;)
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTPS_PORT (msg: "[MILITUS ATTACK] Attack on Highly Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isnotset,dst_xbitsrc,web_vuln_critical_p; xbits: isset,dst_xbitsrc_p,web_vuln_high; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000004; pri:5; rev: 1;)
+#alert any $EXTERNAL_NET any -> $HOME_NET $HTTPS_PORT (msg: "[MILITUS ATTACK] Attack on Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; content:!"ET SCAN"; classtype: correlated-web-attack; xbits: isnotset,dst_xbitsrc_p,web_vuln_critical; xbits: isnotset,dst_xbitsrc_p,web_vuln_high; xbits: isset,dst_xbitsrc_p,web_vuln_medium; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000005; pri:6; rev: 1;)
+
+
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Critically Vulnerable Service - Executable Code"; program: snort; content: "Classification|3a| Executable code was detected"; classtype: correlated-attack; xbits: isset,dst_xbitsrc_p,vuln_critical; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000006; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Highly Vulnerable Service - Executable Code"; program: snort; content: "Classification|3a| Executable code was detected"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isset,dst_xbitsrc_p,vuln_high; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000007; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Vulnerable Service - Executable Code"; program: snort; content: "Classification|3a| Executable code was detected"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isnotset,dst_xbitsrc_p,vuln_high; xbits: isset,dst_xbitsrc_p,vuln_medium; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000008; pri:6; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Critically Vulnerable Service - Malicious Code"; program: snort; content: "Classification|3a| A Network Trojan was detected"; classtype: correlated-attack; xbits: isset,dst_xbitsrc_p,vuln_critical; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000009; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Highly Vulnerable Service - Malicious Code"; program: snort; content: "Classification|3a| A Network Trojan was detected"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isset,dst_xbitsrc_p,vuln_high; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000010; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Vulnerable Service - Malicious Code"; program: snort; content: "Classification|3a| A Network Trojan was detected"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isnotset,dst_xbitsrc_p,vuln_high; xbits: isset,dst_xbitsrc_p,vuln_medium; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000011; pri:6; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Critically Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; classtype: correlated-attack; xbits: isset,dst_xbitsrc_p,vuln_critical; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000012; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Highly Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isset,dst_xbitsrc_p,vuln_high; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000013; pri:5; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Attack on Vulnerable Web Application"; program: snort; content: "Classification|3a| Web Application Attack"; classtype: correlated-attack; xbits: isnotset,dst_xbitsrc_p,vuln_critical; xbits: isnotset,dst_xbitsrc_p,vuln_high; xbits: isset,dst_xbitsrc_p,vuln_medium; xbits: set,attacked_host,86400; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000014; pri:6; rev: 1;)
+
+
+
+alert any $HOME_NET any -> $EXTERNAL_NET any (msg: "[MILITUS ATTACK] Confirmed Intrusion"; program: snort; content: "ATTACK_RESPONSE"; content: "id check returned root"; classtype: correlated-intrusion; xbits: isset,src_xbitdst,attacked_host; xbits: set,intrusion_user,86400; xbits: set, compromised_host, 86400; normalize; reference: url, milituscyber.com; sid:8000015; pri:3; rev: 1;)
+alert any $HOME_NET any -> $EXTERNAL_NET any (msg: "[MILITUS ATTACK] Likely Intrusion"; program: snort; content: "ATTACK_RESPONSE"; content:!"id check returned root"; classtype: correlated-intrusion; xbits: isnotset,src_xbitdst,attacked_host; xbits: set,intrusion_user,86400; xbits: set, compromised_host, 86400; normalize; reference: url, milituscyber.com; sid:8000016; pri:4; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Privilege Escalation Attempt on Confirmed Intrusion"; program: snort; content: "Classification|3a| Attempted Administrator Privilege Gain"; content:!"SQL Server version"; classtype: correlated-privilege-escalation; xbits: isset,dst_xbitsrc,intrusion_user; xbits: set, compromised_host, 86400; normalize; reference: url, milituscyber.com; sid:8000017; pri:3; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Successful Privilege Escalation on Confirmed Intrusion"; program: snort; content: "Classification|3a| Successful Administrator Privilege Gain"; classtype: correlated-privilege-escalation; xbits: isset,dst_xbitsrc,intrusion_user; xbits: set,intrusion_admin,86400; xbits: set, compromised_host, 86400; normalize; reference: url, milituscyber.com; sid:8000018; pri:2; rev: 1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Successful Privilege Escalation on Confirmed Intrusion"; program: snort; content: "id check returned root"; classtype: correlated-privilege-escalation; xbits: isset,by_src,intrusion_user; xbits: unset,both,intrusion_user; xbits: set,intrusion_admin,86400; xbits: set, compromised_host, 86400; normalize; reference: url, milituscyber.com; sid:8000019; pri:2; rev: 1;)
+
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Sensitive Data Exfiltration via SQL Injection"; program: snort; content: "sensitive_data|3a|"; classtype: correlated-data-exfiltration; xbits: isset,reverse,sqli_target; threshold: type limit, track by_src, count 1, seconds 90; normalize; reference: url, milituscyber.com; sid:8000020; pri:1; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] High Severity Malware Intrusion"; program: cyphort; content:!"NONE"; content:!"INFO"; classtype: trojan-activity; xbits: set, compromised_host, 86400; normalize; reference: milituscyber.com; sid: 8000021; pri: 5; rev: 1;)
+
+

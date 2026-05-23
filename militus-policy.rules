@@ -1,0 +1,17 @@
+#Clear Test Passwords
+
+alert any any any -> any any any (msg: "[MILITUS POLICY] Client Data Leakage"; program: pvs; content: "Client Data Leakage Detection"; classtype: nist-impact; threshold: type limit, track by_src, count 1, seconds 1000; normalize; reference: url, milituscyber.com; sid:10000059; pri:7; rev: 1;)
+
+
+#Coin Mining Test Alerts
+#alert any any any -> any any (msg: "[MILITUS POLICY] Possible Coin Mining Bot Activity"; program: snort; meta_content: "%sagan%", $MINING; classtype: traffic-coin-mining; normalize; threshold: type limit, track by_dst, count 1, seconds 1; reference: url, milituscyber.com; sid: 50000003; pri :5; rev:1;)
+
+
+#TOR Traffic
+alert any $EXTERNAL_NET any -> any any (msg: "[MILITUS POLICY] TOR Traffic"; program: snort; content: "ET TOR Known Tor Exit Node"; classtype: traffic-tor; xbits: set,tor_exit_node,3600; normalize; reference: url, milituscyber.com; sid:4005010; pri:6; rev:1;)
+
+alert any $INTERNAL_NET any -> any any (msg: "[MILITUS POLICY] TOR Traffic"; program: snort; content: "ET TOR Known Tor Exit Node"; classtype: traffic-tor; xbits: set,tor_exit_node,300; xbits: noalert; normalize; reference: url, milituscyber.com; sid:4105010; pri:6; rev:1;)
+
+
+#alert any any any -> any any (msg: "[MILITUS POLICY] Possible Coin Mining Bot Activity"; program:snort; meta_content: "%sagan%", $MINING; classtype: traffic-coin-mining; normalize; threshold: type limit, track by_dst, count 1, seconds 300; reference: url, milituscyber.com; sid: 50000003; pri :5; rev:1;)
+

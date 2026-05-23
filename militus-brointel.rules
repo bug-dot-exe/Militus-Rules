@@ -1,0 +1,117 @@
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP In DNS Request"; program: bro_dns; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 30; normalize; reference: milituscyber.com; sid: 3000014; pri:8; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP In DNS Request"; program: bro_dns; bro-intel: by_dst;  classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 30; normalize; reference: milituscyber.com; sid: 3000015; pri:8; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP HTTP Request"; program: bro_http; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000017; pri:8; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP HTTP Request"; program: bro_http; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000018; pri:8; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through SSL"; program: bro_ssl|bro_x059; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000020; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through SSL"; program: bro_ssl|bro_x059; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000021; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through SSH"; program: bro_ssh; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000023; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through SSH"; program: bro_ssh; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000024; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through IRC"; program: bro_irc; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000;  normalize; reference: milituscyber.com; sid: 3000028; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through IRC"; program: bro_irc; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000025; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through FTP"; program: bro_ftp; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86400; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000026; pri:5; rev:1;)
+
+alert any any any -> any any  (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through FTP"; program: bro_ftp; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86400; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000030; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through SMTP"; program: bro_smtp; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86400; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000032; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through SMTP"; program: bro_smtp; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000033; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through SNMP"; program: bro_snmp; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000;  normalize; reference: milituscyber.com; sid: 3000035; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through SNMP"; program: bro_snmp; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000036; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious SRC IP through DHCP"; program: bro_dhcp; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000038; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious DST IP through DHCP"; program: bro_dhcp; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000;  normalize; reference: milituscyber.com; sid: 3000039; pri:5; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious File Hash"; program:bro_files|bro_x509; bro-intel: file_hash; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 1800; normalize; reference: milituscyber.com; sid: 3000040; pri:3; rev:1;)
+                                                      
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious email"; program:bro_smtp; bro-intel: email; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000;  threshold: type limit, track by_dst, count 1, seconds 300; normalize; reference: milituscyber.com; sid: 3000041; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious software"; program:bro_software; bro-intel: software; classtype:suspicious-traffic; xbits: set,attacker_suspicious,86000;  threshold: type limit, track by_dst, count 1, seconds 1000;  normalize; reference: milituscyber.com; sid: 3000042; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious Certificate"; program:bro_x509|bro_ssl; bro-intel: cert_hash; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_src, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000043; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious URL"; program:bro_x509; bro-intel: url; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000;  threshold: type limit, track by_src, count 1, seconds 300;  normalize; reference: milituscyber.com; sid: 3000044; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious URL in DNS"; program:bro_dns; bro-intel: url; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 300; normalize; reference: milituscyber.com; sid: 3000045; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious URL in HTTP Request"; program:bro_http; bro-intel: url; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 3000;  normalize; reference: milituscyber.com; sid: 3000046; pri:3; rev:1;)
+
+#alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Browsing Contents on Suspicious Domain"; program:bro_http; bro-intel:domain ; classtype:suspicious-traffic; xbits: set,attacker_sucpicious,86000;  threshold: type limit, track by_dst, count 1, seconds 3000; threshold: type limit, track  by_src,count 1, seconds 60;  normalize; reference: milituscyber.com; sid: 3000047; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious Domain Through DNS Request"; program:bro_dns; bro-intel: domain ; classtype: suspicious-traffic;  xbits: set,attacker_suspicious,86000;  threshold: type limit, track by_dst, count 1, seconds 3000; normalize; reference: milituscyber.com; sid: 3000048; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious file_name"; program:bro_files; bro-intel:file_name ; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86000;  threshold: type limit, track by_src, count 1, seconds 300; normalize; reference: milituscyber.com; sid: 3000049; pri:3; rev:1;)
+
+alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious file_name Through HTTP Service"; program:bro_http; bro-intel:file_name ; classtype:suspicious-traffic; xbits: set,attacker_suspicious,86000; threshold: type limit, track by_dst, count 1, seconds 100; normalize; reference: milituscyber.com; sid: 3000055; pri:3; rev:1;)
+
+#alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious Username On HTTP Service"; program:bro_http; bro-intel: user_name; classtype: suspicious-traffic; xbits: set,attacker_sucpicious,86000; threshold: type limit, track by_src, count 1, seconds 100; normalize; reference: milituscyber.com; sid: 3000050; pri:3; rev:1;)
+
+
+#alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious Username On FTP Service"; program:bro_ftp; bro-intel: user_name; classtype: suspicious-traffic; 604800; xbits: set,attacker_sucpicious,86500;  threshold: type limit, track by_src, count 1, seconds 100; normalize; reference: milituscyber.com; sid: 3000051; pri:3; rev:1;)
+
+#alert any any any -> any any (msg:"[MILITUS SUSPICIOUS] Suspicious Username On IRC Service"; program:bro_irc; bro-intel: user_name; classtype: suspicious-traffic; xbits: set,attacker_sucpicious,86500; threshold: type limit, track by_dst, count 1, seconds 100; normalize; reference: milituscyber.com; sid: 3000052; pri:3; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious IP Through SRC"; program: bro_conn; bro-intel: by_src; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86500; threshold: type limit, track by_dst, count 1, seconds 60; normalize; reference: milituscyber.com; sid: 3000057; pri:5; rev:1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious IP Through DST"; program: bro_conn; bro-intel: by_dst; classtype: suspicious-traffic; xbits: set,attacker_suspicious,86500; threshold: type limit, track by_dst, count 1, seconds 300; normalize; reference: milituscyber.com; sid: 3000056; pri:5; rev:1;)
+
+############################################################################################################################################################################################################################################
+
+alert any $EXTERNAL_NET any -> $HOME_NET $SMTP_PORT (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on SMTP Service"; program: snort; content: "ET SMTP"; content: !"not|2d|suspicious"  classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000060; pri:6; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $SMTP_PORT (msg: "[MILITUS SUSPICIOUS] Suspicoius Activity on SMTP Service"; program: snort; content: "GPL SMTP"; content: !"not|2d|suspicious" classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious;  xbits: set,attacker_target,86500;threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000061; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on SQL Server"; program: snort; content: "GPL SQL"; content: !"not|2d|suspicious" classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious;  xbits: set,attacker_target,86000; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000059; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $POP3_PORT (msg: "[MILITUS SUSPICIOUS] Supspicious Activity on POP3"; program: snort; content: "GPL POP3"; content: !"not|2d|suspicious" classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000063; pri:7; rev: 1;)
+
+alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on SNMP Service"; program: snort; content: "ET SNMP"; classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious; xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000065; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $TELNET_PORT (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on Telnet Service"; program: snort; content: "ET TELNET";  classtype: suspicious-traffic; xbits: isset,by_dst_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000066; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS SUSPICIOUS] Suspicious Activity Through TFTP"; program: snort; content: "GPL TFTP"; content: !"bad|2d|unknown" classtype: suspicious-traffic; xbits: isset,dst_xbitsrc_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000067; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $TELNET_PORT (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on Telnet Service"; program: snort; content: "GPL TELNET"; content: !"bad|2d|unknown" classtype: suspicious-traffic; xbits: isset,dst_xbitsrc_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000068; pri:7; rev: 1;)
+
+#alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS SUSPICIOUS] Suspicious Activity on Voip"; program: snort; content: "GPL VOIP";  classtype: suspicious-traffic; xbits: isset,dst_xbitsrc,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000069; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $FTP_PORT (msg: "[MILITUS SUSPICIOUS] Suspicious Actitity on FTP server"; program: snort; content: "ET FTP"; content: !"Login Successful" nocase;  classtype: suspicious-traffic; xbits: isset,dst_xbitsrc_p,attacker_suspicious; xbits: set,attacker_target,86500; xbits: set, compromised_host, 86400; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000073; pri:7; rev: 1;)
+
+alert any $EXTERNAL_NET any -> $HOME_NET $FTP_PORT (msg: "[MILITUS SUSPICIOUS] Suspicious Actitity on FTP server"; program: snort; content: "GPL FTP"; content: !"Login Succesful" nocase; classtype: suspicious-traffic; xbits: isset,dst_xbitsrc_p,attacker_suspicious;  xbits: set,attacker_target,86500; threshold: type limit, track by_dst, count 1, seconds 6000; normalize; reference: url, milituscyber.com; sid:3000074; pri:7; rev: 1;)
+
+#alert any any any -> any any (msg: "[MILITUS SUSPICIOUS] Suspicious Bad Traffic"; program: snort; meta_content: "%sagan%",$BADTRAFFIC; classtype: suspicious-traffic; xbits: isset,dst_xbitsrc,attacker_suspicious; xbits: set,attacker_target,86500;  threshold: type limit, track by_dst, count 1, seconds 36000;  normalize; reference: milituscyber.com; sid: 3000072; rev:1;)
+
+
+#SCAN
+
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Perimeter Network Reconnaissance by Suspicious HOST"; program: snort; content: "Classification|3a| Detection of a Network Scan"; classtype: nist-recon; xbits: isset,by_src,attacker_suspicious;  xbits: set,attacker_scan,86400; threshold: type limit, track by_dst, count 1, seconds 36000; normalize; reference: url, milituscyber.com; sid:3000080; pri:7; rev: 1;)
+
+# DOS
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Denial of Service Attack by Suspicious HOST"; program: bro_weird; content: "baroque_SYN"; classtype: attempted-dos; xbits: isset,by_src,attacker_suspicious; xbits: set,dos,86400; normalize; reference: url, milituscyber.com; sid:3000085; after: track by_both, count 40, seconds 60; threshold: type limit, track by_dst, count 5, seconds 60; rev:1;)
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Denial of Service Attack by Suspicious HOST"; program: bro_weird; content: "TCP_ack_underflow_or_misorder"; classtype: attempted-dos; xbits: isset,by_src,attacker_suspicious;  xbits: set,dos,86400; normalize; reference: url, milituscyber.com; sid:3000086; after: track by_both, count 40, seconds 60; threshold: type limit, track by_dst, count 5, seconds 60; rev:1;)
+
+
+# BRUTE FORCE
+
+alert any $EXTERNAL_NET any -> $HOME_NET $TCP_PORTS (msg: "[MILITUS ATTACK] Brute-Force Attack by Suspicious HOST"; program: snort; content: "brute force"; nocase; classtype: nist-impact; xbits: isset,by_src,attacker_suspicious; xbits: set,bruteforce_attack,6000; after: track by_both, count 30, seconds 60; threshold: type limit, track by_src, count 1, seconds 600; normalize;  reference: url, milituscyber.com; sid:3000087; pri:5; rev: 1;)
+
+
+alert any $EXTERNAL_NET any -> $HOME_NET $FTP_PORT (msg: "[MILITUS ATTACK] FTP Login Successful by Suscpicious HOST"; program: snort; content: "FTP Login Successful"; classtype: nist-impact; xbits: isset,both,bruteforce_attack; xbits:set,successful_login,6000; xbits: set, compromised_host, 86400; threshold: type limit, track by_src, count 1, seconds 60; normalize; reference: url, milituscyber.com; sid:3000089; pri:4; rev: 1;)
+
+
+alert any $EXTERNAL_NET any -> $HOME_NET any (msg: "[MILITUS ATTACK] Suspicious Activity on Compromised Host"; program: pvs; content:"tracked|2d|session"; classtype: nist-impact;  xbits: isset,src_xbitdst,attacker_suspicious; xbits: set,track_session,67000; xbits: set, compromised_host, 86400; threshold: type limit, track by_src, count 1, seconds 60; normalize; reference: url, milituscyber.com; sid:3000090; pri:1; rev: 1;)
+
